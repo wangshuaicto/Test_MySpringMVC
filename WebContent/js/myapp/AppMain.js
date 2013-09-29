@@ -3,11 +3,33 @@ Ext.Loader.setConfig({
 		});
 Ext.Loader.setPath('Ext.ux', '/Test_MySpringMVC/js/myapp');// 按照这个urlpattern去请求服务器
 Ext.require('Ext.ux.Spotlight');
+Ext.Loader.setPath('MyWork.test', '/Test_MySpringMVC/js/myapp');
+Ext.require('MyWork.test.Person');
+Ext.Loader.setPath('My.own', '/Test_MySpringMVC/js/myapp');
+Ext.require('My.own.Window');
+Ext.require('My.own.WindowBottomBar');
 Ext.require(['Ext.form.*', 'Ext.tip.QuickTipManager']);
 Ext.application({
 			name : 'HelloExt',
 			launch : function() {
-
+				/** **********************TEST****************************** */
+				var person = Ext.create('MyWork.test.Person', 'SongChong');
+				person.eat('JB');
+				var test = Ext.create('My.own.Window', {
+							Title : 'SongChong',
+							bottomBar : {
+								height : 60
+							}
+						});
+				alert(test.getTitle());
+				test.setTitle("艹尼玛");
+				alert(test.getTitle());
+				test.setTitle(null);
+				test.setBottomBar({
+							height : 100
+						});
+				alert(test.getBottomBar().getHeight());
+				/** **********************TEST****************************** */
 				var spot = Ext.create('Ext.ux.Spotlight', {
 							easing : 'easeOut',
 							duration : 300
@@ -15,7 +37,7 @@ Ext.application({
 
 				var mywindow = Ext.create('Ext.window.Window', {
 							id : 'xxx',
-							draggable : false,
+							draggable : true,
 							resizable : false,
 							title : '请登录',
 							titleAlign : 'center',
@@ -71,6 +93,6 @@ var panel = new Ext.create('Ext.form.Panel', {
 					}, {
 						xtype : 'checkboxfield',
 						boxLabel : '记住密码',
-						align:'right'
+						align : 'right'
 					}]
 		});

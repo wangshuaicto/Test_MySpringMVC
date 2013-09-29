@@ -1,106 +1,107 @@
-Ext.Loader.setConfig({
-			enabled : true
-		});
-Ext.Loader.setPath('Ext.ux', '/Test_MySpringMVC/js/myapp');
-Ext.require('Ext.ux.Spotlight');
-
-Ext.require(['Ext.layout.container.Table', 'Ext.ux.Spotlight']);
-
-// Create a DemoPanel which is the base for each panel in the example
-Ext.define('DemoPanel', {
-			extend : 'Ext.panel.Panel',
-
-			title : 'Demo Panel',
-			frame : true,
-			width : 200,
-			height : 150,
-			html : 'Some panel content goes here!',
-			bodyPadding : 5,
-
-			/**
-			 * Custom method which toggles a Ext.Button for the current panel
-			 * on/off depending on the only argument
-			 */
-			toggle : function(on) {
-				var btns = this.dockedItems.last(), btn = btns.items.first();
-
-				if (btn) {
-					btn.setDisabled(!on);
-				}
-			}
-		});
-
 Ext.onReady(function() {
-			// Create the spotlight component
-			var spot = Ext.create('Ext.ux.Spotlight', {
-						easing : 'easeOut',
-						duration : 300
-					});
-
-			var p1, p2, p3;
-
-			/**
-			 * Method which changes the spotlight to be active on a spefied
-			 * panel
-			 */
-			var updateSpot = function(id) {
-				if (typeof id == 'string') {
-					spot.show(id);
-				} else if (!id && spot.active) {
-					spot.hide();
-				}
-
-				p1.toggle(id == p1.id);
-				p2.toggle(id == p2.id);
-				p3.toggle(id == p3.id);
-			};
-
-			Ext.widget('container', {
+/*
+			Ext.create('Ext.panel.Panel', {
 						renderTo : Ext.getBody(),
-						id : 'demo-ct',
-						border : false,
-
-						layout : {
-							type : 'table',
-							columns : 3
-						},
-
-						items : [p1 = Ext.create('DemoPanel', {
-											id : 'panel1',
-											buttons : [{
-														text : 'Next Panel',
-														disabled : true,
-														handler : function() {
-															updateSpot('panel2');
-														}
-													}]
-										}), p2 = Ext.create('DemoPanel', {
-											id : 'panel2',
-											buttons : [{
-														text : 'Next Panel',
-														disabled : true,
-														handler : function() {
-															updateSpot('panel3');
-														}
-													}]
-										}), p3 = Ext.create('DemoPanel', {
-											id : 'panel3',
-											buttons : [{
-														text : 'Done',
-														disabled : true,
-														handler : function() {
-															updateSpot(false);
-														}
-													}]
-										})]
+						width : 400,
+						height : 300,
+						title : 'Container Panel',
+						items : [{
+									xtype : 'panel',
+									title : 'Child Panel 1',
+									height : 100,
+									width : '75%'
+								}, {
+									xtype : 'panel',
+									title : 'Child Panel 2',
+									height : 100,
+									width : '75%'
+								}]
+					});
+					*/
+	/*
+	Ext.create('Ext.panel.Panel', {
+						renderTo : Ext.getBody(),
+						width : 400,
+						height : 200,
+						title : 'Container Panel',
+						layout : 'column',
+						items : [{
+									xtype : 'panel',
+									title : 'Child Panel 1',
+									height : 100,
+									columnWidth : 0.5
+								}, {
+									xtype : 'panel',
+									title : 'Child Panel 2',
+									height : 100,
+									columnWidth : 0.5
+								}]
+					});
+					*/
+	/*
+	
+	var childPanel1 = Ext.create('Ext.panel.Panel', {
+						title : 'Child Panel 1',
+						html : 'A Panel'
 					});
 
-			// The start button, which starts everything
-			Ext.create('Ext.button.Button', {
-						text : 'Start',
-						renderTo : 'start-ct',
-						handler : function() {
-							updateSpot('panel1');
-						}
+			var childPanel2 = Ext.create('Ext.panel.Panel', {
+						title : 'Child Panel 2',
+						html : 'Another Panel'
 					});
+
+			Ext.create('Ext.container.Viewport', {
+						items : [childPanel1, childPanel2]
+					});
+					*/
+	
+	var tabPanel = Ext.create('Ext.tab.Panel', {
+						renderTo : Ext.getBody(),
+						height : 100,
+						width : 200,
+						items : [{
+							// Explicitly define the xtype of this Component
+							// configuration.
+							// This tells the Container (the tab panel in this
+							// case)
+							// to instantiate a Ext.panel.Panel when it deems
+							// necessary
+							xtype : 'panel',
+							title : 'Tab One',
+							html : 'The first tab',
+							listeners : {
+								render : function() {
+									Ext.MessageBox.alert('Rendered One',
+											'Tab One was rendered.');
+								}
+							}
+						}, {
+							// this component configuration does not have an
+							// xtype since 'panel' is the default
+							// xtype for all Component configurations in a
+							// Container
+							title : 'Tab Two',
+							html : 'The second tab',
+							listeners : {
+								render : function() {
+									Ext.MessageBox.alert('Rendered One',
+											'Tab Two was rendered.');
+								}
+							}
+						}]
+					});
+			tabPanel.add({
+							// this component configuration does not have an
+							// xtype since 'panel' is the default
+							// xtype for all Component configurations in a
+							// Container
+							title : 'Tab Three',
+							html : 'The second tab',
+							listeners : {
+								render : function() {
+									Ext.MessageBox.alert('Rendered One',
+											'Tab Two was rendered.');
+								}
+							}
+						});
 		});

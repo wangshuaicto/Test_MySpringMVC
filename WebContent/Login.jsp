@@ -12,8 +12,8 @@
 	src="/Test_MySpringMVC/Extjs/locale/ext-lang-zh_CN.js">
 	
 </script>
-<script type="text/javascript"
-	src="/Test_MySpringMVC/js/myapp/AppMain.js"></script>
+<!-- <script type="text/javascript"	src="/Test_MySpringMVC/js/myapp/AppMain.js"></script> -->
+<script type="text/javascript"	src="/Test_MySpringMVC/js/myapp/test.js"></script>
 <title>登陆界面</title>
 <style type="text/css">
 body {
